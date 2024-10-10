@@ -10,16 +10,21 @@ def canUnlockAll(boxes):
     Determines the boxes that are unlocked
     Sets the first box unlocked and the keys
     """
-    if not isinstance(boxes, list) or len(boxes) == 0:
+    if (type(boxes)) is not list:
+        return False
+    elif (len(boxes)) == 0:
         return False
     
-    for box in range(1, len(boxes)):
+    for box in range(1, len(boxes) - 1):
         can_open = False
         
         for idx in range(len(boxes)):
-            if box in boxes[idx] and box != idx:
-                can_open = True
+            can_open = box in boxes[idx] and box != idx
+            
+            if can_open:
                 break
             
-        if not can_open:
-            return False
+        if can_open is False:
+            return can_open
+        
+    return True
