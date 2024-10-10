@@ -1,30 +1,31 @@
 #!/usr/bin/python3
-
 """
-Function to unlock boxes
+Module to unlock a series of locked boxes using available keys.
 """
 
 
 def canUnlockAll(boxes):
     """
-    Determines the boxes that are unlocked
-    Sets the first box unlocked and the keys
-    """
-    if (type(boxes)) is not list:
-        return False
-    elif (len(boxes)) == 0:
-        return False
+    Determines whether all the boxes can be unlocked.
     
-    for box in range(1, len(boxes) - 1):
+    Args:
+    boxes (list of lists): A list where each element is a list of keys for other boxes.
+    
+    Returns:
+    bool: True if all boxes can be opened, else False.
+    """
+    if not isinstance(boxes, list):
+        return False
+
+    if len(boxes) == 0:
+        return False
+
+    for box in range(1, len(boxes)):
         can_open = False
-        
         for idx in range(len(boxes)):
-            can_open = box in boxes[idx] and box != idx
-            
-            if can_open:
+            if box in boxes[idx] and box != idx:
+                can_open = True
                 break
-            
-        if can_open is False:
-            return can_open
-        
+        if not can_open:
+            return False
     return True
