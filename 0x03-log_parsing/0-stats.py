@@ -3,7 +3,6 @@
 Log parsing
 """
 
-
 import sys
 
 if __name__ == '__main__':
@@ -17,12 +16,11 @@ if __name__ == '__main__':
     def print_metrics(status_counts: dict, file_size: int) -> None:
         """
         Prints current metrics: total file size and count of each status code.
-        Prints only none zero status code counts.
+        Prints only non-zero status code counts.
         """
         print("File size: {:d}".format(file_size))
-
         for code, count in sorted(status_counts.items()):
-            if count:
+            if count > 0:
                 print("{}: {}".format(code, count))
 
     try:
@@ -31,22 +29,22 @@ if __name__ == '__main__':
             parts = line.split()
 
             try:
-                status_codes = parts[-2]
-                if status_codes in status_counts:
-                    status_counts[status_codes] += 1
-            except BaseException:
+                status_code = parts[-2]
+                if status_code in status_counts:
+                    status_counts[status_code] += 1
+            except IndexError:
                 pass
 
             try:
                 file_size = int(parts[-1])
-
-            except BaseException:
+                filesize += file_size
+            except (IndexError, ValueError):
                 pass
 
             if line_count % 10 == 0:
                 print_metrics(status_counts, filesize)
 
-            print_metrics(status_counts, filesize)
+        print_metrics(status_counts, filesize)
 
     except KeyboardInterrupt:
         print_metrics(status_counts, filesize)
