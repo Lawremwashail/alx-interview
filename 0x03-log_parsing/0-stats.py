@@ -18,10 +18,6 @@ if __name__ == '__main__':
         """
         Prints current metrics: total file size and count of each status code.
         Prints only none zero status code counts.
-
-        Args:
-            status (dict): status_codes
-            file_size (int): total file size
         """
         print("File size: {:d}".format(file_size))
 
