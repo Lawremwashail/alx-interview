@@ -4,7 +4,7 @@ UTF-8 Validation
 """
 
 
-def get_leading_set_bits(num):
+def get_leading_bits(num):
     """
     Returns the number of leading set bits (1) in a byte
     """
@@ -21,22 +21,20 @@ def validUTF8(data):
     Determines if a given data set represents a valid UTF-8 encoding
     """
     num_bytes = 0
-    mask1 = 1 << 7
-    mask2 = 1 << 6
-
-    for byte in data:
-        byte = byte & 0xFF
-
+    for byte in range(len(data)):
         if num_bytes == 0:
+            num_bytes = get_leading_bits(data[byte])
+        if num_bytes == 0:
+            continue
 
-            num_bytes = get_leading_set_bits(byte)
             if num_bytes == 0:
                 continue
             if num_bytes == 1 or num_bytes > 4:
                 return False
         else:
-            if not (byte & mask1 and not (byte & mask2)):
+            if not (data[byte] & (1 << 7) and not (data[byte] & (1 << 6))):
                 return False
+
             num_bytes -= 1
 
     return num_bytes == 0
