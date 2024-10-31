@@ -24,8 +24,6 @@ def validUTF8(data):
     for byte in range(len(data)):
         if num_bytes == 0:
             num_bytes = get_leading_bits(data[byte])
-        if num_bytes == 0:
-            continue
 
             if num_bytes == 0:
                 continue
