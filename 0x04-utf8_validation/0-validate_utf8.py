@@ -35,6 +35,6 @@ def validUTF8(data):
             if not (data[byte] & (1 << 7) and not (data[byte] & (1 << 6))):
                 return False
 
-            num_bytes -= 1
+        num_bytes -= 1
 
     return num_bytes == 0
